@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/acitivity_logins.xml" value="0.1" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/activity_display_contact.xml" value="0.21467391304347827" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/activity_main.xml" value="0.4628623188405797" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/activity_note_detail.xml" value="0.1" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/display_contact.xml" value="0.45652173913043476" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/log_in.xml" value="0.25" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/note_cell.xml" value="0.2203125" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/test.xml" value="0.45652173913043476" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/menu/display_contact.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/menu/menu_main.xml" value="0.5541666666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
