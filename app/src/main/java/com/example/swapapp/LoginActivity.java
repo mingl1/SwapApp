@@ -64,6 +64,12 @@ public class LoginActivity extends AppCompatActivity
         startActivity(newNoteIntent);
     }
 
+    public void testLogin(View view)
+    {
+        Intent newNoteIntent = new Intent(this, LoginTestActivity.class);
+        startActivity(newNoteIntent);
+    }
+
     @Override
     protected void onResume()
     {

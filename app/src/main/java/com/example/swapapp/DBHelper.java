@@ -108,14 +108,28 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getData(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from contacts where OSIS="+id+"", null );
-        return res;
+//    public Cursor getData(int id) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor res =  db.rawQuery( "select * from contacts where OSIS="+id+"", null );
+//        return res;
+//    }
+
+
+    public String getData()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = {this.ID_FIELD,this.NAME,this.PASSWORD};
+        Cursor cursor =db.query(this.TABLE_NAME,columns,null,null,null,null,null);
+        StringBuffer buffer= new StringBuffer();
+        while (cursor.moveToNext())
+        {
+            @SuppressLint("Range") int cid =cursor.getInt(cursor.getColumnIndex(this.ID_FIELD));
+            @SuppressLint("Range") String name =cursor.getString(cursor.getColumnIndex(this.NAME));
+            @SuppressLint("Range") String  password =cursor.getString(cursor.getColumnIndex(this.PASSWORD));
+            buffer.append(cid+ "   " + name + "   " + password +" \n");
+        }
+        return buffer.toString();
     }
-
-
-
 
 
     public void populateNoteListArray()
