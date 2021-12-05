@@ -35,7 +35,7 @@ public class LoginTestActivity extends AppCompatActivity
         boolean yes=true;
         for(int i=0; i<splited.length;i+=3){
             if (splited[i].equals(osis.getText().toString())&&splited[i+2].equals(pw.getText().toString())){
-                Message.message(this, "WELCOME USER!");
+                Message.message(this, "WELCOME "+splited[i+1]);
                 yes=false;
             }
         }
@@ -43,5 +43,10 @@ public class LoginTestActivity extends AppCompatActivity
             Message.message(this, "Wrong osis/PW");
 
         }
+    }
+
+    public void trySignup(View view){
+        Intent newNoteIntent = new Intent(this, NoteDetailActivity.class);
+        startActivity(newNoteIntent);
     }
 }

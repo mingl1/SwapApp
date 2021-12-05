@@ -1,16 +1,16 @@
 package com.example.swapapp;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 public class LoginActivity extends AppCompatActivity
 
 {
-    private ListView noteListView;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,13 +20,13 @@ public class LoginActivity extends AppCompatActivity
         initWidgets();
         loadFromDBToMemory();
         setNoteAdapter();
-        setOnClickListener();
+        //setOnClickListener();
     }
 
 
     private void initWidgets()
     {
-        noteListView = findViewById(R.id.noteListView);
+        recyclerView = findViewById(R.id.recyclerView);
     }
 
     private void loadFromDBToMemory()
@@ -38,24 +38,26 @@ public class LoginActivity extends AppCompatActivity
     private void setNoteAdapter()
     {
         NoteAdapter noteAdapter = new NoteAdapter(getApplicationContext(), LoginNote.nonDeletedNotes());
-        noteListView.setAdapter(noteAdapter);
+        recyclerView.setAdapter(noteAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
 
-    private void setOnClickListener()
-    {
-        noteListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
-            {
-                LoginNote selectedNote = (LoginNote) noteListView.getItemAtPosition(position);
-                Intent editNoteIntent = new Intent(getApplicationContext(), NoteDetailActivity.class);
-                editNoteIntent.putExtra(Note.NOTE_EDIT_EXTRA, selectedNote.getOSIS());
-                startActivity(editNoteIntent);
-            }
-        });
-    }
+//    private void setOnClickListener()
+//    {
+//        noteListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//        {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+//            {
+//                LoginNote selectedNote = (LoginNote) noteListView.getItemAtPosition(position);
+//                Intent editNoteIntent = new Intent(getApplicationContext(), NoteDetailActivity.class);
+//                editNoteIntent.putExtra(Note.NOTE_EDIT_EXTRA, selectedNote.getOSIS());
+//                startActivity(editNoteIntent);
+//            }
+//        });
+//    }
 
 
     public void newNote(View view)

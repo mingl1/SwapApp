@@ -10,32 +10,62 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class NoteAdapter extends ArrayAdapter<LoginNote>
+public class NoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
-    public NoteAdapter(Context context, List<LoginNote> notes)
+    private Context context;
+    private ArrayList<LoginNote> notes;
+    public NoteAdapter(Context context, ArrayList<LoginNote> notes)
     {
-        super(context, 0, notes);
+        this.context=context;
+        this.notes=new ArrayList<>();
+        this.notes.addAll(notes);
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
-    {
-        LoginNote note = getItem(position);
-        if(convertView == null)
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.note_cell, parent, false);
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+        View v = LayoutInflater.from(context).inflate(R.layout.note_cell, parent, false);
 
-        TextView title = convertView.findViewById(R.id.cellTitle);
-        TextView desc = convertView.findViewById(R.id.cellDesc);
-        TextView osis = convertView.findViewById(R.id.osis);
+        MyViewHolder vh = new MyViewHolder(v);
 
-        title.setText(note.getName());
-        desc.setText(note.getPassword());
-        osis.setText(""+note.getOSIS());
-
-        return convertView;
+        return vh;
     }
-}
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        try {
+            MyViewHolder vh = (MyViewHolder) holder;
+            LoginNote note = notes.get(position);
+            vh.title.setText(note.getName());
+            vh.desc.setText(note.getPassword());
+            vh.osis.setText(""+note.getOSIS());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public int getItemCount() {
+        return notes.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView title;
+        TextView desc;
+        TextView osis;
+        public MyViewHolder(View itemView) {
+            super(itemView);
+             title = (TextView) itemView.findViewById(R.id.cellTitle);
+             desc = (TextView)itemView.findViewById(R.id.cellDesc);
+             osis = (TextView) itemView.findViewById(R.id.osis);
+        }
+
+    }}
