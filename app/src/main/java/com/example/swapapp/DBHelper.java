@@ -1,8 +1,6 @@
 package com.example.swapapp;
 
 
-import java.util.HashMap;
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,12 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class DBHelper extends SQLiteOpenHelper {
+public class MarketplaceDBHelper extends SQLiteOpenHelper {
     private static DBHelper sqLiteManager;
 
 
