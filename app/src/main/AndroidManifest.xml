@@ -11,8 +11,10 @@
         android:theme="@style/Theme.SQLiteAndroidStudioTutorial">
         <activity android:name=".NoteDetailActivity"/>
         <activity android:name=".LoginTestActivity"/>
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".addListing"/>
         <activity
-            android:name=".LoginActivity"
+            android:name=".MarketActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

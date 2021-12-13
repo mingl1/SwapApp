@@ -1,136 +1,150 @@
 package com.example.swapapp;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
-public class MarketplaceDBHelper {
+import java.sql.Blob;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+public class MarketplaceDBHelper extends SQLiteOpenHelper
+{
     private static MarketplaceDBHelper sqLiteManager;
-    private static final String DATABASE_NAME = "Listings";
-    private static final int DATABASE_VERSION = 5;
-    private static final String TABLE_NAME = "Listings";
-    private static final String TimeStamp = "timestamp";
-    private static final String Inventory = "inventory";
-    private static final String Wanted = "wanted";
-    private static final String Image = "Image";
-    private static final String ID_FIELD= "OSIS";
 
+
+    private static final String DATABASE_NAME = "Marketplace";
+    private static final int DATABASE_VERSION = 2;
+    private static final String TABLE_NAME = "Listings";
+    private static final String ID_FIELD = "OSIS";
+    private static final String TimeStamp = "timeCreated";
+    private static final String Image = "image";
+    private static final String interested = "interested";
+    private static final String desc = "desc";
+    private static final String NAME = "itemName";
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     @SuppressLint("SimpleDateFormat")
-    public MarketplaceDBHelper (Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public MarketplaceDBHelper(Context context) {
+        super(context, DATABASE_NAME , null, DATABASE_VERSION);
     }
-    public static MarketplaceDBHelper instanceOfDatabase (Context context)
+    public static MarketplaceDBHelper instanceOfDatabase(Context context)
     {
-        if (sqLiteManager == null)
-            sqLiteManager = new MarketplaceDBHelper (context);
+        if(sqLiteManager == null)
+            sqLiteManager = new MarketplaceDBHelper(context);
 
         return sqLiteManager;
     }
-
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
         StringBuilder sql;
-        sql = new StringBuilder ()
+        sql = new StringBuilder()
                 .append("CREATE TABLE ")
                 .append(TABLE_NAME)
                 .append("(")
-                .append(TimeStamp)
-                .append(" INT, ")
-                .append(Inventory)
-                .append(" TEXT, ")
-                .append(Image)
-                .append(" BLOB, ")
-                .append(Wanted)
-                .append(" TEXT) ")
                 .append(ID_FIELD)
-                .append(" INT ");
+                .append(" INT, ")
+                .append(NAME)
+                .append(" TEXT, ")
+                .append(TimeStamp)
+                .append(" TEXT, ")
+//                .append(Image)
+//                .append(" BLOB ")
+                .append(interested)
+                .append(" BOOLEAN, ")
+                .append(desc)
+                .append(" TEXT) ");
 
 
         db.execSQL(sql.toString());
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO Auto-generated method stub
-        db.execSQL("DROP TABLE IF EXISTS Users");
+        db.execSQL("DROP TABLE IF EXISTS Listings");
         onCreate(db);
     }
 
-    public static String getTableName () {
-        return TABLE_NAME;
-    }
-
-
-    public static String getTimeStamp () {
-        return TimeStamp;
-    }
-
-    public static String getInventory () {
-        return Inventory;
-    }
-
-
-    public static String getWanted () {
-        return Wanted;
-    }
-
-    public static String getImage () {
-        return Image;
-    }
-
-
-    public void addNoteToDatabase(LoginNote note)
+    public void addNoteToDatabase(MarketplaceNote note)
     {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-
         ContentValues contentValues = new ContentValues();
+        contentValues.put(ID_FIELD, note.getOSIS());
+        contentValues.put(NAME, note.getName());
         contentValues.put(TimeStamp, note.getTimeStamp());
-        contentValues.put(Inventory, note.getInventory());
-        contentValues.put(Wanted, note.getWanted());
-        contentValues.put(Image, note.getImage());
-
+       // contentValues.put(Image, note.getImage());
+        contentValues.put(interested, note.getInterested());
+        contentValues.put(desc, note.getDesc());
         sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
     }
 
-
-    public Cursor getData(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db . rawQuery ("select * from contacts where OSIS=" + id + "", null);
-        return res;
+    public String getData()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = {this.ID_FIELD,this.NAME,this.TimeStamp,this.interested,this.desc};
+        Cursor cursor =db.query(this.TABLE_NAME,columns,null,null,null,null,null);
+        StringBuffer buffer= new StringBuffer();
+        while (cursor.moveToNext())
+        {
+            @SuppressLint("Range") int id =cursor.getInt(cursor.getColumnIndex(this.ID_FIELD));
+            @SuppressLint("Range") String name =cursor.getString(cursor.getColumnIndex(this.NAME));
+            @SuppressLint("Range") String  timeStamp =cursor.getString(cursor.getColumnIndex(this.TimeStamp));
+            @SuppressLint("Range") String  interested =cursor.getString(cursor.getColumnIndex(this.interested));
+            @SuppressLint("Range") String  desc =cursor.getString(cursor.getColumnIndex(this.desc));
+            buffer.append(id+ "   " + name + "   " + timeStamp+ "  "+ interested + "   "+ desc+" \n");
+        }
+        return buffer.toString();
     }
-
-
-
-
 
     public void populateNoteListArray()
     {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        try (Cursor result = sqLiteDatabase . rawQuery ("SELECT * FROM " + TABLE_NAME, null))
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null))
         {
-            if (result.getCount() != 0) {
-                while (result.moveToNext()) {
-                    int id = result . getInt (0);
-                    String name = result . getString (1);
-                    String password = result . getString (2);
-                    LoginNote note = new LoginNote(id, name, password);
-                    LoginNote.noteArrayList.add(note);
+            System.out.println(result.getCount());
+            if(result.getCount() != 0)
+            {
+                while (result.moveToNext())
+                {
+                    boolean interest;
+                    int id = result.getInt(0);
+                    String name = result.getString(1);
+                    String TimeStamp = result.getString(2);
+                    String interested = result.getString(3);
+                    String desc = result.getString(4);
+                    if (interested.equalsIgnoreCase("true")){
+                        interest=true;
+                    }
+                    else
+                        interest=false;
+                    MarketplaceNote note = new MarketplaceNote(id,name,TimeStamp, interest, desc);
+                    MarketplaceNote.noteArrayList.add(note);
                 }
             }
         }
     }
 
-    public void updateNoteInDB(LoginNote Note) {
+    public void updateNoteInDB(MarketplaceNote Note)
+    {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(ID_FIELD, Note.getOSIS());
+        contentValues.put(NAME, Note.getName());
+        contentValues.put(desc, Note.getDesc());
         contentValues.put(TimeStamp, Note.getTimeStamp());
-        contentValues.put(Inventory, Note.getInventory());
-        contentValues.put(Wanted, Note.getWanted());
-        contentValues.put(Image, Note.getImage());
+        contentValues.put(interested,Note.getInterested());
+
+        sqLiteDatabase.update(TABLE_NAME, contentValues, ID_FIELD + " =? ", new String[]{String.valueOf(Note.getOSIS())});
     }
+
+
 }
+

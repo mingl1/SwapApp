@@ -1,33 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="15dp"
-    android:layout_height="110dp">
+    android:layout_height="300dp"
+    android:orientation="vertical"
+    android:padding="15dp">
+
     <TextView
         android:id="@+id/osis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OSIS"
-        android:textStyle="bold"
+        android:layout_marginStart="7dp"
+        android:layout_marginBottom="1dp"
         android:maxLines="1"
-        android:textSize="10sp"/>
+        android:text="OSIS"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/cellTitle"
+        app:layout_constraintStart_toStartOf="@+id/cellTitle" />
+
     <TextView
         android:id="@+id/cellTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
-        android:textStyle="bold"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="55dp"
         android:maxLines="1"
-        android:textSize="25sp"/>
+        android:text="Title"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/cellDesc" />
 
     <TextView
         android:id="@+id/cellDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="29dp"
         android:maxLines="1"
-        android:layout_marginTop="5dp"
-        android:textSize="20sp"/>
+        android:text="Description"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cellTitle" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/osis"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ToggleButton
+        android:id="@+id/interested"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="14dp"
+        android:textOff="Interested?"
+        android:textOn="Interested"
+        android:text="Interested"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/timeCreated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="11dp"
+        android:text="time"
+        app:layout_constraintStart_toEndOf="@+id/osis"
+        app:layout_constraintTop_toBottomOf="@+id/photo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
