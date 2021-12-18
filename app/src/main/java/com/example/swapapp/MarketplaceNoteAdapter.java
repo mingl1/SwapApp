@@ -1,6 +1,8 @@
 package com.example.swapapp;
 
 
+import static java.lang.Boolean.parseBoolean;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,12 +48,10 @@ public class MarketplaceNoteAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             vh.interest.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        System.out.println("workingworkingworkingworkingworkingworkingworkingworkingworkingworkingworkingworkingworkingworking");
-                        note.setInterested(true);
+                        note.setInterested("true");
                         sqLiteManager.updateNoteInDB(note);
                     } else {
-                        System.out.println("222222222222222222222222222222222222222222222222222222222222");
-                        note.setInterested(false);
+                        note.setInterested("false");
                         sqLiteManager.updateNoteInDB(note);
                     }
                 }
@@ -60,7 +60,7 @@ public class MarketplaceNoteAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             vh.desc.setText(note.getDesc());
             vh.osis.setText(""+note.getOSIS());
             vh.timeCreated.setText(note.getTimeStamp());
-            vh.interest.setChecked(note.getInterested());
+            vh.interest.setChecked(parseBoolean(note.getInterested()));
             vh.item.setImageResource(R.drawable.lock);
 
 
@@ -94,8 +94,6 @@ public class MarketplaceNoteAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             timeCreated=itemView.findViewById(R.id.timeCreated);
             interest= itemView.findViewById(R.id.interested);
             item =itemView.findViewById(R.id.photo);
-
-
         }
 
     }}

@@ -67,7 +67,7 @@ public class addListing extends AppCompatActivity
         if(selectedNote == null)
         {
             int id = Integer.parseInt(OSIS);
-            MarketplaceNote newNote = new MarketplaceNote(id, title ,sdf.format(new Date()), false, desc);
+            MarketplaceNote newNote = new MarketplaceNote(id, title ,sdf.format(new Date()), "false", desc);
             MarketplaceNote.noteArrayList.add(newNote);
             sqLiteManager.addNoteToDatabase(newNote);
         }

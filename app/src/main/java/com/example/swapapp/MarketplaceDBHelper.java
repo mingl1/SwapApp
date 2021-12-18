@@ -7,11 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.sql.Blob;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class MarketplaceDBHelper extends SQLiteOpenHelper
 {
@@ -19,14 +15,16 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
 
 
     private static final String DATABASE_NAME = "Marketplace";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String TABLE_NAME = "Listings";
-    private static final String ID_FIELD = "OSIS";
+    private static final String OSIS = "OSIS";
     private static final String TimeStamp = "timeCreated";
     private static final String Image = "image";
     private static final String interested = "interested";
     private static final String desc = "desc";
     private static final String NAME = "itemName";
+    private static final String visibility = "visibility";
+    private static final String ID="ID";
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     @SuppressLint("SimpleDateFormat")
@@ -49,7 +47,7 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
                 .append("CREATE TABLE ")
                 .append(TABLE_NAME)
                 .append("(")
-                .append(ID_FIELD)
+                .append(OSIS)
                 .append(" INT, ")
                 .append(NAME)
                 .append(" TEXT, ")
@@ -58,9 +56,13 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
 //                .append(Image)
 //                .append(" BLOB ")
                 .append(interested)
-                .append(" BOOLEAN, ")
+                .append(" TEXT, ")
                 .append(desc)
                 .append(" TEXT) ");
+//                .append(visibility)
+//                .append(" TEXT, ")
+//                .append(ID)
+//                .append(" INT) ");
 
 
         db.execSQL(sql.toString());
@@ -76,7 +78,7 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ID_FIELD, note.getOSIS());
+        contentValues.put(OSIS, note.getOSIS());
         contentValues.put(NAME, note.getName());
         contentValues.put(TimeStamp, note.getTimeStamp());
        // contentValues.put(Image, note.getImage());
@@ -88,12 +90,12 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
     public String getData()
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        String[] columns = {this.ID_FIELD,this.NAME,this.TimeStamp,this.interested,this.desc};
+        String[] columns = {this.OSIS,this.NAME,this.TimeStamp,this.interested,this.desc};
         Cursor cursor =db.query(this.TABLE_NAME,columns,null,null,null,null,null);
         StringBuffer buffer= new StringBuffer();
         while (cursor.moveToNext())
         {
-            @SuppressLint("Range") int id =cursor.getInt(cursor.getColumnIndex(this.ID_FIELD));
+            @SuppressLint("Range") int id =cursor.getInt(cursor.getColumnIndex(this.OSIS));
             @SuppressLint("Range") String name =cursor.getString(cursor.getColumnIndex(this.NAME));
             @SuppressLint("Range") String  timeStamp =cursor.getString(cursor.getColumnIndex(this.TimeStamp));
             @SuppressLint("Range") String  interested =cursor.getString(cursor.getColumnIndex(this.interested));
@@ -114,18 +116,12 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
             {
                 while (result.moveToNext())
                 {
-                    boolean interest;
                     int id = result.getInt(0);
                     String name = result.getString(1);
                     String TimeStamp = result.getString(2);
                     String interested = result.getString(3);
                     String desc = result.getString(4);
-                    if (interested.equalsIgnoreCase("true")){
-                        interest=true;
-                    }
-                    else
-                        interest=false;
-                    MarketplaceNote note = new MarketplaceNote(id,name,TimeStamp, interest, desc);
+                    MarketplaceNote note = new MarketplaceNote(id,name,TimeStamp, interested, desc);
                     MarketplaceNote.noteArrayList.add(note);
                 }
             }
@@ -136,13 +132,13 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ID_FIELD, Note.getOSIS());
+        contentValues.put(OSIS, Note.getOSIS());
         contentValues.put(NAME, Note.getName());
         contentValues.put(desc, Note.getDesc());
         contentValues.put(TimeStamp, Note.getTimeStamp());
         contentValues.put(interested,Note.getInterested());
 
-        sqLiteDatabase.update(TABLE_NAME, contentValues, ID_FIELD + " =? ", new String[]{String.valueOf(Note.getOSIS())});
+        sqLiteDatabase.update(TABLE_NAME, contentValues, OSIS + " =? ", new String[]{String.valueOf(Note.getOSIS())});
     }
 
 

@@ -20,6 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String PHONE = "phone";
     private static final String PASSWORD = "password";
     private static final String ID_FIELD = "OSIS";
+    private static final String inventory = "owned";
 
 
     @SuppressLint("SimpleDateFormat")
@@ -49,7 +50,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 .append(NAME)
                 .append(" TEXT, ")
                 .append(PASSWORD)
-                .append(" TEXT) ");
+                .append(" TEXT, ")
+                .append(inventory)
+                .append(" TEXT)");
 
 
         db.execSQL(sql.toString());

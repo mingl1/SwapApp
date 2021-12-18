@@ -3,20 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.48026315789473684" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/drawable/button_bg.xml" value="0.3201754385964912" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/drawable/ic_launcher_background.xml" value="0.48026315789473684" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/acitivity_logins.xml" value="0.25" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/activity_display_contact.xml" value="0.21467391304347827" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/activity_main.xml" value="0.4628623188405797" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/activity_note_detail.xml" value="0.1" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/addlisting.xml" value="0.4666666666666667" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/display_contact.xml" value="0.45652173913043476" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/fragment_marketplace.xml" value="0.2259963768115942" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/layout_main.xml" value="0.2565789473684211" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/log_in.xml" value="0.25" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/navbar.xml" value="0.2565789473684211" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/note_cell.xml" value="0.33" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/test.xml" value="0.45652173913043476" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/welcome.xml" value="0.33" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/menu/display_contact.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/menu/menu_main.xml" value="0.5541666666666667" />
-        <entry key="app/src/main/res/layout/fragment_marketplace.xml" value="0.1381340579710145" />
-        <entry key="app/src/main/res/layout/layout_main.xml" value="0.1381340579710145" />
       </map>
     </option>
   </component>

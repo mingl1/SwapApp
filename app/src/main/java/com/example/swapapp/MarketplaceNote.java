@@ -1,14 +1,10 @@
 package com.example.swapapp;
 
-import org.apache.http.conn.ConnectTimeoutException;
-
 import java.sql.Blob;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 public class MarketplaceNote {
     public static ArrayList<MarketplaceNote> noteArrayList = new ArrayList<>();
@@ -16,9 +12,10 @@ public class MarketplaceNote {
     private int OSIS;
     private String TimeStamp;
     private Blob Image;
-    private Boolean Interested;
+    private String Interested;
     private String Desc;
     private String Name;
+    private int ID;
 
     public int getOSIS() {
         return OSIS;
@@ -52,11 +49,11 @@ public class MarketplaceNote {
         Image = image;
     }
 
-    public Boolean getInterested() {
+    public String getInterested() {
         return Interested;
     }
 
-    public void setInterested(Boolean interested) {
+    public void setInterested(String interested) {
         Interested = interested;
     }
 
@@ -68,7 +65,8 @@ public class MarketplaceNote {
         this.Desc = desc;
     }
 
-    public MarketplaceNote(int OSIS, String Name, String TimeStamp, Boolean Interested, String desc) {
+    public int getID(){return ID;}
+    public MarketplaceNote(int OSIS, String Name, String TimeStamp, String Interested, String desc) {
 
         this.OSIS = OSIS;
         this.TimeStamp = TimeStamp;
