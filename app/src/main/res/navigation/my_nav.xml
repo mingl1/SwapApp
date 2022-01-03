@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/marketplace">
+    <fragment
+        android:id="@+id/addlistings"
+        android:name="com.example.swapapp.addlistings"
+        android:label="fragment_addlistings"
+        tools:layout="@layout/fragment_addlistings" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/marketplace"
+        android:name="com.example.swapapp.marketplace"
+        android:label="fragment_marketplace"
+        tools:layout="@layout/fragment_marketplace" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/loginScreen"
+        android:name="com.example.swapapp.loginScreen"
+        android:label="fragment_login_screen"
+        tools:layout="@layout/fragment_login_screen" >
+
+    </fragment>
+</navigation>

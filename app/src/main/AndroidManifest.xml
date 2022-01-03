@@ -13,8 +13,9 @@
         <activity android:name=".LoginTestActivity"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".addListing"/>
+        <activity android:name=".MarketActivity"/>
         <activity
-            android:name=".MarketActivity"
+            android:name=".mainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -11,7 +11,10 @@
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/activity_main.xml" value="0.4628623188405797" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/activity_note_detail.xml" value="0.1" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/addlisting.xml" value="0.4666666666666667" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/camera.xml" value="0.4666666666666667" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/display_contact.xml" value="0.45652173913043476" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/fragment_addlistings.xml" value="0.17850877192982456" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/fragment_login_screen.xml" value="0.23157894736842105" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/fragment_marketplace.xml" value="0.2259963768115942" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/layout_main.xml" value="0.2565789473684211" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/log_in.xml" value="0.25" />
@@ -19,6 +22,7 @@
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/note_cell.xml" value="0.33" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/test.xml" value="0.45652173913043476" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/layout/welcome.xml" value="0.33" />
+        <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/menu/bottom_nav_menu.xml" value="0.4666666666666667" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/menu/display_contact.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/keklo/AndroidStudioProjects/SwapAPp3/app/src/main/res/menu/menu_main.xml" value="0.5541666666666667" />
       </map>

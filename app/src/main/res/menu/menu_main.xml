@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item android:id="@+id/item1"
-        android:icon="@drawable/group_1"
+        android:icon="@drawable/additem"
         android:title="@string/Add_New" >
     </item>
 
