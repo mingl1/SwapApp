@@ -1,8 +1,11 @@
 package com.example.swapapp;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,54 +14,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class loginScreen extends Fragment {
+public class loginScreen extends AppCompatActivity {
 
     private EditText osis, pw;
     private DBHelper x;
     private Button login, signup;
 
-    public loginScreen() {
-        // Required empty public constructor
-    }
-
-    // can maybe use to record login
-//
-//    // TODO: Rename and change types and number of parameters
-//    public static loginScreen newInstance(String param1, String param2) {
-//        loginScreen fragment = new loginScreen();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_login_screen, container, false);
-        initWidgets(v);
-        x=DBHelper.instanceOfDatabase(this.getContext());
-
-        return v;
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_login_screen);
+        initWidgets();
+        x=DBHelper.instanceOfDatabase(this);
     }
 
-    private void initWidgets(View v)
+
+    private void initWidgets()
     {
-        osis = v.findViewById(R.id.userOsis);
-        pw = v.findViewById(R.id.userPassword);
-        login=v.findViewById(R.id.button2);
-        signup=v.findViewById(R.id.button3);
+        osis = findViewById(R.id.userOsis);
+        pw = findViewById(R.id.userPassword);
+        login=findViewById(R.id.button2);
+        signup=findViewById(R.id.button3);
 
         login.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -77,24 +54,42 @@ public class loginScreen extends Fragment {
 
     }
 
-    public void tryLogin(View view){
-        String data= x.getData();
-        String[] splited = data.split("\\s+");
-        boolean yes=true;
-        for(int i=0; i<splited.length;i+=3){
-            if (splited[i].equals(osis.getText().toString())&&splited[i+2].equals(pw.getText().toString())){
-                Message.message(this.getContext(), "WELCOME "+splited[i+1]);
-                yes=false;
+    public void tryLogin(View view) {
+        SQLiteDatabase u = x.getReadableDatabase();
+//        String[] splited = data.split("\\s+");
+//        boolean yes=true;
+//        for(int i=0; i<splited.length;i+=3){
+//            if (splited[i].equals(osis.getText().toString())&&splited[i+2].equals(pw.getText().toString())){
+//                Message.message(this.getContext(), "WELCOME "+splited[i+1]);
+//                yes=false;
+//                Bundle bundle= new Bundle();
+//                bundle.putInt("OSIS", Integer.parseInt(([i-1]));
+//            }
+//        }
+//        if (yes){
+//            Message.message(this.getContext(), "Wrong osis/PW");
+//
+//        }
+        try (Cursor result = u.rawQuery("SELECT OSIS FROM Users WHERE OSIS = " + osis.getText().toString() + " AND password = " + pw.getText().toString(), null)) {
+            if (result.getCount() != 0) {
+                while (result.moveToNext()) {
+                    Message.message(this, "WELCOME " + result.getInt(0));
+                    Intent intent = new Intent(this, mainActivity.class);
+                    intent.putExtra("OSIS",result.getInt(0));
+                    startActivity(intent);
+                }
             }
-        }
-        if (yes){
-            Message.message(this.getContext(), "Wrong osis/PW");
+            else{
+                    Message.message(this, "Wrong osis/PW");
+                }
+            }
+
 
         }
-    }
+
 
     public void trySignup(View view){
-//        Intent newNoteIntent = new Intent(this, NoteDetailActivity.class);
-//        startActivity(newNoteIntent);
+        Intent newNoteIntent = new Intent(this, NoteDetailActivity.class);
+        startActivity(newNoteIntent);
     }
 }

@@ -41,8 +41,9 @@
     <ImageView
         android:id="@+id/addPhoto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_height="150dp"
+        tools:src="@drawable/addimage"
+        android:clickable="true"/>
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,2 +1,4 @@
-package com.example.swapapp;public class camera {
+package com.example.swapapp;
+
+public class camera {
 }

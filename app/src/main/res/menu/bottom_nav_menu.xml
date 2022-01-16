@@ -3,24 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/addlistings"
-        android:enabled="true"
-        android:icon="@drawable/additem"
-        android:title="addItem"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/marketplace"
         android:enabled="true"
         android:icon="@drawable/swap"
-        android:title="Swap"
-        app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/loginScreen"
-        android:enabled="true"
-        android:icon="@drawable/profile"
-        android:title="Profile"
-        app:showAsAction="ifRoom" />
+        android:title="Swap" />
+
+
+        <item android:id="@+id/Search"
+            android:title="Search"
+            android:icon="@drawable/ic_search" />
+
+        <item android:id="@+id/placeholder"
+            android:title="" />
+
+        <item android:id="@+id/chat"
+            android:title="Profile"
+            android:icon="@drawable/chat" />
+
+        <item android:id="@+id/logout"
+            android:title="Settings"
+            android:icon="@drawable/ic_logout" />
 
 </menu>

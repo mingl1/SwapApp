@@ -10,12 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SQLiteAndroidStudioTutorial">
         <activity android:name=".NoteDetailActivity"/>
-        <activity android:name=".LoginTestActivity"/>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".addListing"/>
-        <activity android:name=".MarketActivity"/>
+        <activity android:name=".mainActivity"/>
         <activity
-            android:name=".mainActivity"
+            android:name=".loginScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

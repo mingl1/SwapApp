@@ -1,69 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_screen___scaled_for_1080_resolution">
+    android:background="@drawable/background"
+    android:paddingTop="20dp"
+
+    android:paddingBottom="200dp">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/icons"
+    android:layout_centerVertical="true"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/userPassword"
-        android:layout_width="200dp"
+        android:layout_width="199dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="84dp"
-        android:layout_marginBottom="101dp"
         android:maxLines="1"
+        android:layout_below="@+id/userOsis"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userOsis" />
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="385dp" />
 
     <EditText
         android:id="@+id/userOsis"
-        android:layout_width="0dp"
+        android:layout_width="199dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="358dp"
-        android:layout_marginBottom="168dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/icons"
         android:layout_weight="1"
         android:maxLines="1"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintEnd_toEndOf="@+id/userPassword"
-        app:layout_constraintStart_toStartOf="@+id/userPassword"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="340dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button2"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="205dp"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button3"
-        app:layout_constraintTop_toBottomOf="@+id/userPassword"
-        app:strokeColor="@color/white" />
+</LinearLayout>
+
+<LinearLayout
+    android:id="@+id/buttons"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentBottom="true"
+
+    >
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button3"
         style="?attr/materialButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="end"
-        android:layout_marginStart="86dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginBottom="212dp"
+        android:layout_width="100dp"
+        android:layout_height="57dp"
+        android:layout_marginRight="20dp"
         android:background="@color/signup"
         android:text="SIGN UP"
         android:textColor="@color/white"
         android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userOsis" />
+ />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button2"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="114dp"
+        android:layout_height="57dp"
+        android:text="LOGIN"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:strokeColor="@color/white" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
+
+<LinearLayout
+    android:id="@+id/icons"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_centerVertical="true"
+    android:paddingLeft="90dp"
+    >
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="35dp"
+        android:layout_height="37dp"
+        android:src="@drawable/mail"
+        android:layout_centerVertical="true"
+        app:layout_constraintHeight_percent=".045"
+        app:layout_constraintWidth_percent="0.09"
+        tools:layout_editor_absoluteX="72dp"
+        tools:layout_editor_absoluteY="340dp"
+        android:layout_marginBottom="10dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="39dp"
+        android:layout_height="39dp"
+        android:src="@drawable/lock"
+        android:layout_below="@+id/imageView2"
+        app:layout_constraintHeight_percent=".047"
+        app:layout_constraintWidth_percent="0.1"
+        tools:layout_editor_absoluteX="70dp"
+        tools:layout_editor_absoluteY="385dp" />
+
+
+
+
+
+</LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="314dp"
+        android:layout_height="166dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/group_9"
+        app:layout_constraintHeight_percent=".2"
+        app:layout_constraintWidth_percent="0.8"
+        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteY="78dp" />
+
+
+</RelativeLayout>

@@ -41,7 +41,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="Name:"
         android:textSize="25sp"
         android:layout_marginTop="20dp"
         android:textColor="@color/darkGray"
@@ -52,17 +52,35 @@
         android:id="@+id/titleEditText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:maxLines="1"
         android:textColor="@color/darkGray"
+        android:textSize="25sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/darkGray"
+        android:textStyle="bold"
         android:layout_gravity="center"/>
 
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="300dp"
+        android:layout_height="51dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:minLines="3"
+        android:textColor="@color/darkGray"
+        android:textSize="25sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PASSWORD"
+        android:text="@string/password"
         android:textSize="25sp"
         android:layout_marginTop="20dp"
         android:textColor="@color/darkGray"
@@ -72,12 +90,13 @@
     <EditText
         android:id="@+id/descriptionEditText"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:minLines="3"
         android:textColor="@color/darkGray"
-        android:layout_gravity="center"/>
+        android:textSize="25sp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,16 +106,16 @@
         android:textColor="@color/darkGray"
         android:textStyle="bold"
         android:layout_gravity="center"/>
+
     <EditText
         android:id="@+id/OSIS"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:minLines="3"
         android:textColor="@color/darkGray"
-        android:layout_gravity="center"/>
-
+        android:textSize="25sp" />
 
 
     <Button

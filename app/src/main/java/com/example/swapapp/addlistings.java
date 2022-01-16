@@ -24,6 +24,7 @@ public class addlistings extends Fragment {
     // TODO: Rename and change types of parameters
     private EditText titleEditText, descEditText, ID;
     private Button addItem, deleteButton;
+    private int userOSIS;
     private MarketplaceNote selectedNote;
 
     public addlistings() {
@@ -57,7 +58,7 @@ public class addlistings extends Fragment {
         View v = inflater.inflate(R.layout.fragment_addlistings, container, false);
         initWidgets(v);
         checkForEditNote();
-
+        userOSIS=getActivity().getIntent().getExtras().getInt("OSIS");
         return v;
     }
 
@@ -66,7 +67,7 @@ public class addlistings extends Fragment {
         titleEditText = v.findViewById(R.id.titleEditText);
         descEditText = v.findViewById(R.id.descriptionEditText);
         deleteButton = v.findViewById(R.id.deleteNoteButton);
-        ID = v.findViewById(R.id.OSIS);
+        ID = v.findViewById(userOSIS);
         addItem=v.findViewById(R.id.addItem);
         addItem.setOnClickListener(new View.OnClickListener(){
             @Override

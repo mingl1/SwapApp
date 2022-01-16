@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 public class marketplace extends Fragment {
     private RecyclerView recyclerView;
+    private int userOSIS;
 
     public marketplace() {
         // Required empty public constructor
@@ -40,12 +41,15 @@ public class marketplace extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        super.onCreate(savedInstanceState);
         View v= inflater.inflate(R.layout.fragment_marketplace, container, false);
 
         initWidgets(v);
         loadFromDBToMemory();
         setNoteAdapter();
+
+        userOSIS=getActivity().getIntent().getExtras().getInt("OSIS");
+        System.out.println(userOSIS);
         return v;
     }
 
@@ -56,7 +60,7 @@ public class marketplace extends Fragment {
 
     private void loadFromDBToMemory()
     {
-        MarketplaceDBHelper sqLiteManager = MarketplaceDBHelper.instanceOfDatabase(this.getContext());
+        MarketplaceDBHelper sqLiteManager = MarketplaceDBHelper.instanceOfDatabase(getActivity().getApplicationContext());
         sqLiteManager.populateNoteListArray();
     }
 
@@ -64,7 +68,7 @@ public class marketplace extends Fragment {
     {
         MarketplaceNoteAdapter noteAdapter = new MarketplaceNoteAdapter(getActivity().getApplicationContext(), MarketplaceNote.freshListings());
         recyclerView.setAdapter(noteAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
 
