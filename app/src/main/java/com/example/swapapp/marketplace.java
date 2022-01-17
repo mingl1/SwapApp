@@ -39,13 +39,16 @@ public class marketplace extends Fragment {
 //    }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         View v= inflater.inflate(R.layout.fragment_marketplace, container, false);
 
         initWidgets(v);
-        loadFromDBToMemory();
+//        loadFromDBToMemory();
         setNoteAdapter();
 
         userOSIS=getActivity().getIntent().getExtras().getInt("OSIS");
@@ -58,18 +61,22 @@ public class marketplace extends Fragment {
         recyclerView = v.findViewById(R.id.recyclerView);
     }
 
-    private void loadFromDBToMemory()
-    {
-        MarketplaceDBHelper sqLiteManager = MarketplaceDBHelper.instanceOfDatabase(getActivity().getApplicationContext());
-        sqLiteManager.populateNoteListArray();
-    }
+//    private void loadFromDBToMemory()
+//    {
+//        MarketplaceDBHelper sqLiteManager = MarketplaceDBHelper.instanceOfDatabase(getActivity().getApplicationContext());
+//        sqLiteManager.populateNoteListArray(userOSIS);
+//    }
 
     private void setNoteAdapter()
     {
-        MarketplaceNoteAdapter noteAdapter = new MarketplaceNoteAdapter(getActivity().getApplicationContext(), MarketplaceNote.freshListings());
+        MarketplaceNoteAdapter noteAdapter = new MarketplaceNoteAdapter(getActivity().getApplicationContext(), MarketplaceNote.freshListings(), userOSIS);
         recyclerView.setAdapter(noteAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
+    }
 }

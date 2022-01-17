@@ -3,6 +3,7 @@ package com.example.swapapp;
 import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -11,20 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-
+import java.util.UUID;
 
 public class addlistings extends Fragment {
 
 
 
     // TODO: Rename and change types of parameters
-    private EditText titleEditText, descEditText, ID;
+    private EditText titleEditText, descEditText;
     private Button addItem, deleteButton;
     private int userOSIS;
+    private ImageView addPhoto;
     private MarketplaceNote selectedNote;
 
     public addlistings() {
@@ -54,7 +58,7 @@ public class addlistings extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_addlistings, container, false);
         initWidgets(v);
         checkForEditNote();
@@ -67,15 +71,26 @@ public class addlistings extends Fragment {
         titleEditText = v.findViewById(R.id.titleEditText);
         descEditText = v.findViewById(R.id.descriptionEditText);
         deleteButton = v.findViewById(R.id.deleteNoteButton);
-        ID = v.findViewById(userOSIS);
         addItem=v.findViewById(R.id.addItem);
+        addPhoto=v.findViewById(R.id.addPhoto);
+
+        addPhoto.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                ImagePicker.with(getActivity())
+//                        .crop()	    			//Crop image(Optional), Check Customization for more option
+//                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
+//                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+            }
+        });
+
         addItem.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 saveNote(v);
             }
         });
-
     }
 
     private void checkForEditNote()
@@ -102,17 +117,25 @@ public class addlistings extends Fragment {
 
     public void saveNote(View view)
     {
-        MarketplaceDBHelper sqLiteManager = MarketplaceDBHelper.instanceOfDatabase(this.getContext());
+        MarketplaceDBHelper sqLiteManager = MarketplaceDBHelper.instanceOfDatabase(getActivity().getApplicationContext());
         String title = String.valueOf(titleEditText.getText());
         String desc = String.valueOf(descEditText.getText());
-        String OSIS = String.valueOf(ID.getText());
+        String OSIS = ""+userOSIS;
+        String ID = UUID.randomUUID().toString();
+        String image="";
+        try{
+            image = addPhoto.getTag().toString();
+        }
+        catch (Exception e){
+            Message.message(this.getContext(), "No photo");
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
         if(selectedNote == null)
         {
-            int id = Integer.parseInt(OSIS);
-            MarketplaceNote newNote = new MarketplaceNote(id, title ,sdf.format(new Date()), "false", desc);
-            MarketplaceNote.noteArrayList.add(newNote);
+            int userOSIS = Integer.parseInt(OSIS);
+            MarketplaceNote newNote = new MarketplaceNote(userOSIS, title ,sdf.format(new Date()), "", desc, "TRUE", ID, image);
+            MarketplaceNote.inventory.add(newNote);
             sqLiteManager.addNoteToDatabase(newNote);
         }
         else
@@ -120,15 +143,19 @@ public class addlistings extends Fragment {
             selectedNote.setName(title);
             selectedNote.setDesc(desc);
             selectedNote.setOSIS(Integer.parseInt(OSIS));
+            selectedNote.setVisability("TRUE");
+            selectedNote.setID(ID);
+            selectedNote.setImage(image);
             sqLiteManager.updateNoteInDB(selectedNote);
         }
-        this.getActivity().recreate();
+        getParentFragmentManager().beginTransaction().replace(R.id.fragment_nav_host,new addlistings()).commit();
     }
 
     public void deleteNote(View view)
     {
         MarketplaceDBHelper sqLiteManager = MarketplaceDBHelper.instanceOfDatabase(this.getContext());
         sqLiteManager.updateNoteInDB(selectedNote);
-        this.getActivity().recreate();
+        getParentFragmentManager().beginTransaction().replace(R.id.fragment_nav_host,new addlistings()).commit();
     }
+
 }

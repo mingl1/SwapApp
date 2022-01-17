@@ -15,7 +15,7 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
 
 
     private static final String DATABASE_NAME = "Marketplace";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 6;
     private static final String TABLE_NAME = "Listings";
     private static final String OSIS = "OSIS";
     private static final String TimeStamp = "timeCreated";
@@ -53,16 +53,16 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
                 .append(" TEXT, ")
                 .append(TimeStamp)
                 .append(" TEXT, ")
-//                .append(Image)
-//                .append(" BLOB ")
                 .append(interested)
                 .append(" TEXT, ")
                 .append(desc)
-                .append(" TEXT) ");
-//                .append(visibility)
-//                .append(" TEXT, ")
-//                .append(ID)
-//                .append(" INT) ");
+                .append(" TEXT, ")
+                .append(visibility)
+                .append(" TEXT, ")
+                .append(ID)
+                .append(" TEXT , ")
+                .append(Image)
+                .append(" TEXT ) ");
 
 
         db.execSQL(sql.toString());
@@ -84,6 +84,9 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
        // contentValues.put(Image, note.getImage());
         contentValues.put(interested, note.getInterested());
         contentValues.put(desc, note.getDesc());
+        contentValues.put(visibility, note.getVisability() );
+        contentValues.put(ID, note.getID());
+        contentValues.put(Image, note.getImage());
         sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
     }
 
@@ -105,7 +108,36 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
         return buffer.toString();
     }
 
-    public void populateNoteListArray()
+    public void populateMarketPlace(int userOSIS)
+    {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null))
+        {
+            System.out.println(result.getCount());
+            if(result.getCount() != 0)
+            {
+                while (result.moveToNext())
+                {
+                    int OSIS = result.getInt(0);
+                    String name = result.getString(1);
+                    String TimeStamp = result.getString(2);
+                    String interested = result.getString(3);
+                    String desc = result.getString(4);
+                    String vis = result.getString(5);
+                    String itemID = result.getString(6);
+                    String image = result.getString(7);
+
+                    if(!(OSIS==userOSIS)){
+                        MarketplaceNote note = new MarketplaceNote(OSIS,name,TimeStamp, interested, desc, vis, itemID, image);
+                        MarketplaceNote.noteArrayList.add(note);
+                    }
+                }
+
+            }
+        }
+    }
+    public void populateInventory(int OSIS)
     {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -121,13 +153,17 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
                     String TimeStamp = result.getString(2);
                     String interested = result.getString(3);
                     String desc = result.getString(4);
-                    MarketplaceNote note = new MarketplaceNote(id,name,TimeStamp, interested, desc);
-                    MarketplaceNote.noteArrayList.add(note);
+                    String vis = result.getString(5);
+                    String itemID = result.getString(6);
+                    String image = result.getString(7);
+                    if((""+id).equals(""+OSIS)) {
+                        MarketplaceNote note = new MarketplaceNote(id, name, TimeStamp, interested, desc, vis, itemID,image);
+                        MarketplaceNote.inventory.add(note);
+                    }
                 }
             }
         }
     }
-
     public void updateNoteInDB(MarketplaceNote Note)
     {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -137,8 +173,11 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
         contentValues.put(desc, Note.getDesc());
         contentValues.put(TimeStamp, Note.getTimeStamp());
         contentValues.put(interested,Note.getInterested());
+        contentValues.put(visibility, Note.getVisability() );
+        contentValues.put(ID, Note.getID());
+        contentValues.put(Image, Note.getImage());
 
-        sqLiteDatabase.update(TABLE_NAME, contentValues, OSIS + " =? ", new String[]{String.valueOf(Note.getOSIS())});
+        sqLiteDatabase.update(TABLE_NAME, contentValues, ID + " =? ", new String[]{String.valueOf(Note.getID())});
     }
 
 

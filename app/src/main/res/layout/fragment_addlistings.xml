@@ -42,7 +42,7 @@
         android:id="@+id/addPhoto"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        tools:src="@drawable/addimage"
+        android:src="@drawable/addimage"
         android:clickable="true"/>
 
     <TextView
@@ -78,24 +78,6 @@
 
     <EditText
         android:id="@+id/descriptionEditText"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:layout_marginTop="20dp"
-        android:minLines="3"
-        android:textColor="@color/darkGray"
-        android:layout_gravity="center"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your OSIS"
-        android:textSize="25sp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/darkGray"
-        android:textStyle="bold"
-        android:layout_gravity="center"/>
-    <EditText
-        android:id="@+id/OSIS"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:textSize="25sp"
