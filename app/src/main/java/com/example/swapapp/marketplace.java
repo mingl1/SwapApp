@@ -48,11 +48,9 @@ public class marketplace extends Fragment {
         View v= inflater.inflate(R.layout.fragment_marketplace, container, false);
 
         initWidgets(v);
-//        loadFromDBToMemory();
         setNoteAdapter();
 
         userOSIS=getActivity().getIntent().getExtras().getInt("OSIS");
-        System.out.println(userOSIS);
         return v;
     }
 
@@ -69,7 +67,7 @@ public class marketplace extends Fragment {
 
     private void setNoteAdapter()
     {
-        MarketplaceNoteAdapter noteAdapter = new MarketplaceNoteAdapter(getActivity().getApplicationContext(), MarketplaceNote.freshListings(), userOSIS);
+        MarketplaceNoteAdapter noteAdapter = new MarketplaceNoteAdapter(getActivity().getApplicationContext(), MarketplaceNote.freshListings(), getActivity().getIntent().getExtras().getInt("OSIS"));
         recyclerView.setAdapter(noteAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
     }

@@ -46,6 +46,8 @@ public class signup extends Fragment {
         super.onCreate(savedInstanceState);
         View v= inflater.inflate(R.layout.fragment_marketplace, container, false);
         initWidgets(v);
+        DBHelper x = DBHelper.instanceOfDatabase(this.getContext());
+        x.populateNoteListArray();
         return v;
     }
     private void initWidgets(View v)

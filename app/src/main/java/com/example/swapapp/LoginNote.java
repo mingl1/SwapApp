@@ -13,6 +13,7 @@ public class LoginNote
     private String phone;
     private String email;
     private String password;
+    private String interests;
 
     public LoginNote(int OSIS, String name, String phone, String email, String password) {
         this.OSIS = OSIS;
@@ -20,6 +21,7 @@ public class LoginNote
         this.phone = phone;
         this.email = email;
         this.password = password;
+
     }
 
     public LoginNote(int OSIS, String name, String password) {
@@ -28,9 +30,12 @@ public class LoginNote
         this.phone = null;
         this.email = null;
         this.password = password;
+        this.interests = "";
     }
 
-
+    public void addInterest(String ownerOSIS){
+        interests+=ownerOSIS+"   ";
+    }
     public int getOSIS() {
         return OSIS;
     }
@@ -55,6 +60,8 @@ public class LoginNote
         this.phone = phone;
     }
 
+    public String getInterests(){ return interests;}
+
     public String getEmail() {
         return email;
     }
@@ -71,6 +78,17 @@ public class LoginNote
         this.password = password;
     }
 
+    public void removeInterest(int x ){
+        String s = ""+x;
+        String[] splited = this.interests.split("\\s+");
+        String newInterest ="";
+        for (int i=0; i<splited.length;i++){
+            if (!splited[i].equals(s)){
+                newInterest+=splited[i]+" ";
+            }
+        }
+        this.interests=newInterest;
+    }
     public static LoginNote getNoteForID(int passedNoteID)
     {
 

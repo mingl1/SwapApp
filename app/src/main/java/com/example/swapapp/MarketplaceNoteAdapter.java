@@ -1,10 +1,13 @@
 package com.example.swapapp;
 
 
+import static com.example.swapapp.LoginNote.getNoteForID;
+import static com.example.swapapp.LoginNote.noteArrayList;
 import static java.lang.Boolean.parseBoolean;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +23,34 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MarketplaceNoteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     private Context context;
     private int OSIS;
+    private DBHelper users;
+    //loginnote of person logged in
+    private LoginNote userz;
     private ArrayList<MarketplaceNote> notes;
     public MarketplaceNoteAdapter(Context context, ArrayList<MarketplaceNote> notes, int OSIS)
     {
         this.context=context;
         this.OSIS=OSIS;
+        System.out.println("OSIS Is" + OSIS);
         this.notes=notes;
-    }
+        this.users=DBHelper.instanceOfDatabase(context);
+
+//
+//        users.populateNoteListArray();
+
+        for (LoginNote note : LoginNote.noteArrayList){
+
+            if (note.getOSIS()==OSIS){
+                System.out.println("User OSIS IS: "+note.getOSIS());
+                userz=note;
+            }
+    }}
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
@@ -44,14 +63,17 @@ public class MarketplaceNoteAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MarketplaceDBHelper sqLiteManager = MarketplaceDBHelper.instanceOfDatabase(context);
+        DBHelper user = DBHelper.instanceOfDatabase(context);
         try {
             MyViewHolder vh = (MyViewHolder) holder;
             MarketplaceNote note = notes.get(position);
             vh.interest.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        note.setInterested(note.getInterested()+"  "+ OSIS+"    ");
-                        sqLiteManager.updateNoteInDB(note);
+                        //takeable by
+                        note.setInterested(note.getInterested()+ userz.getOSIS()+"    ");
+                        //add osis that can trade with current user
+                        userz.addInterest(""+note.getOSIS());
                     } else {
                         String interest[] = note.getInterested().split("\\s+");
                         String newInterest="";
@@ -63,10 +85,15 @@ public class MarketplaceNoteAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                                 newInterest+=interest[i]+"    ";
                             }
                         }
+                        System.out.println("REMOVING :"+OSIS+";;;");
+                        userz.removeInterest(OSIS);
                         note.setInterested(newInterest);
-                        sqLiteManager.updateNoteInDB(note);
+
                     }
+                    user.updateNoteInDB(userz);
+                    sqLiteManager.updateNoteInDB(note);
                 }
+
             });
             vh.title.setText(note.getName());
             vh.desc.setText(note.getDesc());

@@ -13,14 +13,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "Users";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
     private static final String TABLE_NAME = "Users";
     private static final String EMAIL = "email";
     private static final String NAME = "name";
     private static final String PHONE = "phone";
     private static final String PASSWORD = "password";
     private static final String ID_FIELD = "OSIS";
-    private static final String inventory = "owned";
+    private static final String interest = "interest";
 
 
     @SuppressLint("SimpleDateFormat")
@@ -51,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 .append(" TEXT, ")
                 .append(PASSWORD)
                 .append(" TEXT, ")
-                .append(inventory)
+                .append(interest)
                 .append(" TEXT)");
 
 
@@ -99,7 +99,6 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(ID_FIELD, note.getOSIS());
         contentValues.put(NAME, note.getName());
         contentValues.put(PASSWORD, note.getPassword());
-
         sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
     }
 
@@ -155,6 +154,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(ID_FIELD, Note.getOSIS());
         contentValues.put(NAME, Note.getName());
         contentValues.put(PASSWORD, Note.getPassword());
+        contentValues.put(interest, Note.getInterests());
 
         sqLiteDatabase.update(TABLE_NAME, contentValues, ID_FIELD + " =? ", new String[]{String.valueOf(Note.getOSIS())});
     }

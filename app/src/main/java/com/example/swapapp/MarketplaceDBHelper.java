@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class MarketplaceDBHelper extends SQLiteOpenHelper
 {
@@ -90,23 +91,6 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
         sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
     }
 
-    public String getData()
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String[] columns = {this.OSIS,this.NAME,this.TimeStamp,this.interested,this.desc};
-        Cursor cursor =db.query(this.TABLE_NAME,columns,null,null,null,null,null);
-        StringBuffer buffer= new StringBuffer();
-        while (cursor.moveToNext())
-        {
-            @SuppressLint("Range") int id =cursor.getInt(cursor.getColumnIndex(this.OSIS));
-            @SuppressLint("Range") String name =cursor.getString(cursor.getColumnIndex(this.NAME));
-            @SuppressLint("Range") String  timeStamp =cursor.getString(cursor.getColumnIndex(this.TimeStamp));
-            @SuppressLint("Range") String  interested =cursor.getString(cursor.getColumnIndex(this.interested));
-            @SuppressLint("Range") String  desc =cursor.getString(cursor.getColumnIndex(this.desc));
-            buffer.append(id+ "   " + name + "   " + timeStamp+ "  "+ interested + "   "+ desc+" \n");
-        }
-        return buffer.toString();
-    }
 
     public void populateMarketPlace(int userOSIS)
     {
@@ -130,7 +114,10 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
 
                     if(!(OSIS==userOSIS)){
                         MarketplaceNote note = new MarketplaceNote(OSIS,name,TimeStamp, interested, desc, vis, itemID, image);
-                        MarketplaceNote.noteArrayList.add(note);
+                        if(!MarketplaceNote.noteArrayList.contains(note)){
+                            MarketplaceNote.noteArrayList.add(note);
+                        }
+
                     }
                 }
 
@@ -143,7 +130,6 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
 
         try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null))
         {
-            System.out.println(result.getCount());
             if(result.getCount() != 0)
             {
                 while (result.moveToNext())
@@ -178,6 +164,32 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
         contentValues.put(Image, Note.getImage());
 
         sqLiteDatabase.update(TABLE_NAME, contentValues, ID + " =? ", new String[]{String.valueOf(Note.getID())});
+    }
+
+    public ArrayList<MarketplaceNote> search( String s ){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ArrayList<MarketplaceNote> x= new ArrayList<MarketplaceNote>();
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME +" WHERE "+ NAME+" LIKE "+s, null)){
+            if(result.getCount() != 0)
+            {
+                while (result.moveToNext())
+                {
+                    int id = result.getInt(0);
+                    String name = result.getString(1);
+                    String TimeStamp = result.getString(2);
+                    String interested = result.getString(3);
+                    String desc = result.getString(4);
+                    String vis = result.getString(5);
+                    String itemID = result.getString(6);
+                    String image = result.getString(7);
+                    if(!(""+id).equals(""+OSIS)) {
+                        MarketplaceNote note = new MarketplaceNote(id, name, TimeStamp, interested, desc, vis, itemID,image);
+                        x.add(note);
+                    }
+                }
+            }
+        }
+        return x;
     }
 
 

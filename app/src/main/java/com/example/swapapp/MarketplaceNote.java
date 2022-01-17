@@ -10,6 +10,7 @@ import java.util.Date;
 public class MarketplaceNote {
     public static ArrayList<MarketplaceNote> noteArrayList = new ArrayList<>();
     public static ArrayList<MarketplaceNote> inventory = new ArrayList<>();
+    public static ArrayList<MarketplaceNote> tradeable = new ArrayList<>();
 
     private int OSIS;
     private String TimeStamp;
@@ -79,6 +80,7 @@ public class MarketplaceNote {
 
     public void setID(String id){this.ID=id;}
     public String getID(){return ID;}
+
     public MarketplaceNote(int OSIS, String Name, String TimeStamp, String Interested, String desc, String vis, String ID, String image) {
 
         this.OSIS = OSIS;
