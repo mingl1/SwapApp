@@ -8,12 +8,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper sqLiteManager;
 
 
     private static final String DATABASE_NAME = "Users";
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     private static final String TABLE_NAME = "Users";
     private static final String EMAIL = "email";
     private static final String NAME = "name";
@@ -127,10 +129,10 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void populateNoteListArray()
+    public ArrayList<LoginNote> populateNoteListArray()
     {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-
+        ArrayList<LoginNote> x  = new ArrayList<>();
         try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null))
         {
             if(result.getCount() != 0)
@@ -141,10 +143,11 @@ public class DBHelper extends SQLiteOpenHelper {
                     String name = result.getString(1);
                     String password = result.getString(2);
                     LoginNote note = new LoginNote(id,name,password);
-                    LoginNote.noteArrayList.add(note);
+                    x.add(note);
                 }
             }
         }
+        return x;
     }
 
     public void updateNoteInDB(LoginNote Note)

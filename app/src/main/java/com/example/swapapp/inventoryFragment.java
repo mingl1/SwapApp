@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 public class inventoryFragment extends Fragment {
     private RecyclerView recyclerView;
     private int userOSIS;
+    private MarketplaceDBHelper helper;
+
     public inventoryFragment() {
     }
 
@@ -27,12 +29,13 @@ public class inventoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_inventory, container, false);
+        userOSIS=getActivity().getIntent().getExtras().getInt("OSIS");
+        helper= MarketplaceDBHelper.instanceOfDatabase(getActivity().getApplicationContext());
         initWidgets(v);
-//        loadFromDBToMemory();
+
         setNoteAdapter();
 
-        userOSIS=getActivity().getIntent().getExtras().getInt("OSIS");
-        System.out.println(userOSIS);
+
         return v;
     }
 
@@ -49,7 +52,7 @@ public class inventoryFragment extends Fragment {
 
     private void setNoteAdapter()
     {
-        InventoryAdapter noteAdapter = new InventoryAdapter(this.getContext(), MarketplaceNote.inventoryListings(), userOSIS, getParentFragmentManager());
+        InventoryAdapter noteAdapter = new InventoryAdapter(this.getContext(), helper.populateInventory(userOSIS), userOSIS, getParentFragmentManager());
         recyclerView.setAdapter(noteAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
     }

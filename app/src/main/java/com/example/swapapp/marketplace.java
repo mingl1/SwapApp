@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 public class marketplace extends Fragment {
     private RecyclerView recyclerView;
     private int userOSIS;
-
+    private MarketplaceDBHelper helper;
     public marketplace() {
         // Required empty public constructor
     }
@@ -46,11 +46,12 @@ public class marketplace extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_marketplace, container, false);
-
+        helper = MarketplaceDBHelper.instanceOfDatabase(getActivity().getApplicationContext());
+        userOSIS=getActivity().getIntent().getExtras().getInt("OSIS");
         initWidgets(v);
         setNoteAdapter();
 
-        userOSIS=getActivity().getIntent().getExtras().getInt("OSIS");
+
         return v;
     }
 
@@ -67,7 +68,8 @@ public class marketplace extends Fragment {
 
     private void setNoteAdapter()
     {
-        MarketplaceNoteAdapter noteAdapter = new MarketplaceNoteAdapter(getActivity().getApplicationContext(), MarketplaceNote.freshListings(), getActivity().getIntent().getExtras().getInt("OSIS"));
+        System.out.println("CURRENT OSIS:"+userOSIS);
+        MarketplaceNoteAdapter noteAdapter = new MarketplaceNoteAdapter(getActivity().getApplicationContext(), helper.populateMarketPlace(userOSIS), getActivity().getIntent().getExtras().getInt("OSIS"));
         recyclerView.setAdapter(noteAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
     }

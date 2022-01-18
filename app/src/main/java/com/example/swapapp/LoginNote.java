@@ -100,7 +100,7 @@ public class LoginNote
 
         return null;
     }
-    public static ArrayList<LoginNote> nonDeletedNotes()
+    public static ArrayList<LoginNote> populateLogin()
     {
         ArrayList<LoginNote> nonDeleted = new ArrayList<>();
         for(LoginNote note : noteArrayList)

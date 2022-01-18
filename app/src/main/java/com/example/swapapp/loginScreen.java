@@ -70,10 +70,10 @@ public class loginScreen extends AppCompatActivity {
 //            Message.message(this.getContext(), "Wrong osis/PW");
 //
 //        }
-        try (Cursor result = u.rawQuery("SELECT OSIS FROM Users WHERE OSIS = " + osis.getText().toString() + " AND password = " + pw.getText().toString(), null)) {
+        try (Cursor result = u.rawQuery("SELECT * FROM Users WHERE OSIS = " + osis.getText().toString() + " AND password = " + pw.getText().toString(), null)) {
             if (result.getCount() != 0) {
                 while (result.moveToNext()) {
-                    Message.message(this, "WELCOME " + result.getInt(0));
+                    Message.message(this, "WELCOME " + result.getString(1));
                     Intent intent = new Intent(this, mainActivity.class);
                     intent.putExtra("OSIS",result.getInt(0));
                     startActivity(intent);

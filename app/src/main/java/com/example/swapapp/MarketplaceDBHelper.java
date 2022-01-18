@@ -16,7 +16,7 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
 
 
     private static final String DATABASE_NAME = "Marketplace";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 8;
     private static final String TABLE_NAME = "Listings";
     private static final String OSIS = "OSIS";
     private static final String TimeStamp = "timeCreated";
@@ -92,11 +92,12 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
     }
 
 
-    public void populateMarketPlace(int userOSIS)
+    public ArrayList<MarketplaceNote> populateMarketPlace(int userOSIS)
     {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ArrayList<MarketplaceNote> list= new ArrayList<MarketplaceNote>();
 
-        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null))
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME +" ORDER BY timeCreated DESC ", null))
         {
             System.out.println(result.getCount());
             if(result.getCount() != 0)
@@ -114,21 +115,21 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
 
                     if(!(OSIS==userOSIS)){
                         MarketplaceNote note = new MarketplaceNote(OSIS,name,TimeStamp, interested, desc, vis, itemID, image);
-                        if(!MarketplaceNote.noteArrayList.contains(note)){
-                            MarketplaceNote.noteArrayList.add(note);
-                        }
+                        list.add(note);
 
                     }
                 }
 
             }
         }
+        return list;
     }
-    public void populateInventory(int OSIS)
+    public ArrayList<MarketplaceNote>  populateInventory(int OSIS)
     {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ArrayList<MarketplaceNote> list= new ArrayList<MarketplaceNote>();
 
-        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null))
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME+" ORDER BY timeCreated DESC ", null))
         {
             if(result.getCount() != 0)
             {
@@ -144,11 +145,12 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
                     String image = result.getString(7);
                     if((""+id).equals(""+OSIS)) {
                         MarketplaceNote note = new MarketplaceNote(id, name, TimeStamp, interested, desc, vis, itemID,image);
-                        MarketplaceNote.inventory.add(note);
+                        list.add(note);
                     }
                 }
             }
         }
+        return list;
     }
     public void updateNoteInDB(MarketplaceNote Note)
     {

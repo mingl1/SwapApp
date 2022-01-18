@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class tradeFragment extends Fragment {
         itemID=getArguments().getString("itemID");
         users=DBHelper.instanceOfDatabase(getActivity().getApplicationContext());
         OSIS = ""+getActivity().getIntent().getExtras().getInt("OSIS");
+        a=MarketplaceDBHelper.instanceOfDatabase(getActivity().getApplicationContext());
         recyclerView= v.findViewById(R.id.tradeView);
         user=LoginNote.getNoteForID(getActivity().getIntent().getExtras().getInt("OSIS"));
         tradeAdapter noteAdapter = new tradeAdapter(this.getContext(), trades(itemID, OSIS), itemID, getParentFragmentManager());
@@ -49,21 +51,23 @@ public class tradeFragment extends Fragment {
 
     public ArrayList<MarketplaceNote> trades(String id, String osis) {
         ArrayList<MarketplaceNote> tradable = new ArrayList<>();
-        ArrayList<Integer> show = new ArrayList<>();
-        for (LoginNote i : LoginNote.noteArrayList){
+        ArrayList<LoginNote> s = users.populateNoteListArray();
+        ArrayList<LoginNote> z = new ArrayList<>();
+        ArrayList<MarketplaceNote> list = a.populateMarketPlace(Integer.parseInt(OSIS));
+        for (LoginNote i : s){
             String [] split = i.getInterests().split("\\s+");
             System.out.println(i.getInterests());
             for (String j: split){
                 if (j.equalsIgnoreCase(osis)){
-                    show.add(i.getOSIS());
+                    z.add(i);
+                    break;
                 }
             }
         }
 
-        for (MarketplaceNote i: MarketplaceNote.noteArrayList){
-            for (int j: show){
-                System.out.println(i.getOSIS());
-                if (j==i.getOSIS()){
+        for (MarketplaceNote i: list){
+            for (LoginNote j :z){
+                if (j.getInterests().contains(""+i.getOSIS())){
                     System.out.println("WORKING TRADABLE");
                     tradable.add(i);
                 }
