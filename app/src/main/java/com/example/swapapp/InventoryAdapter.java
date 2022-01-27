@@ -54,6 +54,22 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         try {
             MyInventoryViewHolder vh = (MyInventoryViewHolder) holder;
             MarketplaceNote note = notes.get(position);
+
+            if (note.getVisability().equals("TRUE")){
+                vh.list.setChecked(true);
+            }
+            vh.list.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        note.setVisability("TRUE");
+                    }
+                    else{
+                        note.setVisability("FALSE");
+                    }
+                    sqLiteManager.updateNoteInDB(note);
+                }
+
+            });
             vh.title.setText(note.getName());
             vh.desc.setText(note.getDesc());
             vh.osis.setText(""+note.getOSIS());
@@ -102,6 +118,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ImageView item;
         TextView timeCreated;
         Button Swap;
+        ToggleButton list;
         public MyInventoryViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.cellTitle);
@@ -110,6 +127,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             timeCreated=itemView.findViewById(R.id.timeCreated);
             Swap= itemView.findViewById(R.id.swaps);
             item =itemView.findViewById(R.id.photo);
+            list = itemView.findViewById((R.id.show));
         }
 
     }}

@@ -71,26 +71,24 @@ public class MarketplaceNoteAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         //takeable by
-                        note.setInterested(note.getInterested()+ userz.getOSIS()+"    ");
+                        note.setInterested(note.getInterested()+OSIS+"    ");
+                        System.out.println("CURRENT INTEREST: "+note.getInterested());
                         //add osis that can trade with current user
-                        userz.addInterest(""+note.getOSIS());
-                    } else {
+//                        userz.addInterest(""+note.getOSIS());
+                    }
+                    else{
                         String interest[] = note.getInterested().split("\\s+");
                         String newInterest="";
                         for(int i=0; i<interest.length; i++){
-                            if (interest[i].equals(""+OSIS)){
-                                interest[i]="";
-                            }
-                            else{
+                            if (!interest[i].equals(""+OSIS)){
                                 newInterest+=interest[i]+"    ";
                             }
                         }
-                        System.out.println("REMOVING :"+OSIS+";;;");
-                        userz.removeInterest(OSIS);
+                        System.out.println("new interest :"+newInterest+";;;");
+//                        userz.removeInterest(OSIS);
                         note.setInterested(newInterest);
-
                     }
-                    user.updateNoteInDB(userz);
+//                    user.updateNoteInDB(userz);
                     sqLiteManager.updateNoteInDB(note);
                 }
 

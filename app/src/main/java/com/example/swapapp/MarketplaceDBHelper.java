@@ -113,7 +113,7 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
                     String itemID = result.getString(6);
                     String image = result.getString(7);
 
-                    if(!(OSIS==userOSIS)){
+                    if((!(OSIS==userOSIS))&&vis.equals("TRUE")){
                         MarketplaceNote note = new MarketplaceNote(OSIS,name,TimeStamp, interested, desc, vis, itemID, image);
                         list.add(note);
 

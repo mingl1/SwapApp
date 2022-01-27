@@ -29,18 +29,21 @@ import java.util.List;
 public class tradeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     private Context context;
-    private String ID;
+    private String OSIS, itemID;
     private ArrayList<MarketplaceNote> notes;
     private FragmentManager fragmentManager;
+    private MarketplaceDBHelper helper;
     private ViewGroup parent;
     private ArrayList<String> dupeCheck;
-    public tradeAdapter(Context context, ArrayList<MarketplaceNote> notes, String ID, FragmentManager fragmentManager)
+    public tradeAdapter(Context context, ArrayList<MarketplaceNote> notes, String OSIS,String ID, FragmentManager fragmentManager)
     {
         this.fragmentManager=fragmentManager;
         this.context=context;
-        this.ID=ID;
+        this.OSIS=OSIS;
         this.dupeCheck=new ArrayList<String>();
         this.notes=notes;
+        this.itemID=ID;
+        helper = MarketplaceDBHelper.instanceOfDatabase(context);
     }
 
     @Override
@@ -57,6 +60,7 @@ public class tradeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         try {
             MyTradeViewHolder vh = (MyTradeViewHolder) holder;
             MarketplaceNote note = notes.get(position);
+            vh.list.setVisibility(View.INVISIBLE);
             Boolean x = false;
             for(String i: dupeCheck){
                 if (i.equals(note.getID())){
@@ -67,6 +71,7 @@ public class tradeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
             else {
                 dupeCheck.add(note.getID());
+                vh.list.setVisibility(View.INVISIBLE);
                 vh.title.setText(note.getName());
                 vh.desc.setText(note.getDesc());
                 vh.osis.setText("" + note.getOSIS());
@@ -75,11 +80,21 @@ public class tradeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 vh.Swap.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("itemID", note.getID());
-                        Fragment trade = new tradeFragment();
-                        trade.setArguments(bundle);
-                        fragmentManager.beginTransaction().replace(R.id.fragment_nav_host, trade).commit();
+                        int o = note.getOSIS();
+                        note.setOSIS(Integer.parseInt(OSIS));
+                        note.setVisability("FALSE");
+
+                        for (MarketplaceNote i : helper.populateInventory(Integer.parseInt(OSIS.trim()))){
+                            if (i.getID().equals(itemID)){
+                                System.out.println("SUCCESS");
+                                i.setOSIS(o);
+                                i.setVisability("FALSE");
+                                helper.updateNoteInDB(i);
+                            }
+                        }
+                        helper.updateNoteInDB(note);
+                        Fragment inv = new inventoryFragment();
+                        fragmentManager.beginTransaction().replace(R.id.fragment_nav_host,inv).commit();
                     }
                 });
 
@@ -115,6 +130,7 @@ public class tradeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ImageView item;
         TextView timeCreated;
         Button Swap;
+        ToggleButton list;
         public MyTradeViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.cellTitle);
@@ -123,6 +139,7 @@ public class tradeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             timeCreated=itemView.findViewById(R.id.timeCreated);
             Swap= itemView.findViewById(R.id.swaps);
             item =itemView.findViewById(R.id.photo);
+            list = itemView.findViewById(R.id.show);
         }
 
     }}

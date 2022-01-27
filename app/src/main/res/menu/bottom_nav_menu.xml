@@ -19,11 +19,11 @@
             android:title="" />
 
         <item android:id="@+id/Inventory"
-            android:title="Profile"
+            android:title="Inventory"
             android:icon="@drawable/ic_inventory" />
 
         <item android:id="@+id/logout"
-            android:title="Settings"
+            android:title="Exit"
             android:icon="@drawable/ic_logout" />
 
 </menu>
