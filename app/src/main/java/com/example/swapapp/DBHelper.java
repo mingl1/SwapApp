@@ -15,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "Users";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 10;
     private static final String TABLE_NAME = "Users";
     private static final String EMAIL = "email";
     private static final String NAME = "name";
@@ -52,9 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 .append(NAME)
                 .append(" TEXT, ")
                 .append(PASSWORD)
-                .append(" TEXT, ")
-                .append(interest)
-                .append(" TEXT)");
+                .append(" TEXT ) ");
 
 
         db.execSQL(sql.toString());
@@ -157,7 +155,6 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(ID_FIELD, Note.getOSIS());
         contentValues.put(NAME, Note.getName());
         contentValues.put(PASSWORD, Note.getPassword());
-        contentValues.put(interest, Note.getInterests());
 
         sqLiteDatabase.update(TABLE_NAME, contentValues, ID_FIELD + " =? ", new String[]{String.valueOf(Note.getOSIS())});
     }

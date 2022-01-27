@@ -56,20 +56,6 @@ public class loginScreen extends AppCompatActivity {
 
     public void tryLogin(View view) {
         SQLiteDatabase u = x.getReadableDatabase();
-//        String[] splited = data.split("\\s+");
-//        boolean yes=true;
-//        for(int i=0; i<splited.length;i+=3){
-//            if (splited[i].equals(osis.getText().toString())&&splited[i+2].equals(pw.getText().toString())){
-//                Message.message(this.getContext(), "WELCOME "+splited[i+1]);
-//                yes=false;
-//                Bundle bundle= new Bundle();
-//                bundle.putInt("OSIS", Integer.parseInt(([i-1]));
-//            }
-//        }
-//        if (yes){
-//            Message.message(this.getContext(), "Wrong osis/PW");
-//
-//        }
         try (Cursor result = u.rawQuery("SELECT * FROM Users WHERE OSIS = " + osis.getText().toString() + " AND password = " + pw.getText().toString(), null)) {
             if (result.getCount() != 0) {
                 while (result.moveToNext()) {

@@ -16,7 +16,7 @@ public class MarketplaceDBHelper extends SQLiteOpenHelper
 
 
     private static final String DATABASE_NAME = "Marketplace";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 10;
     private static final String TABLE_NAME = "Listings";
     private static final String OSIS = "OSIS";
     private static final String TimeStamp = "timeCreated";

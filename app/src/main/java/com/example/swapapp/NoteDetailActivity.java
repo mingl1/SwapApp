@@ -61,7 +61,6 @@ public class NoteDetailActivity extends AppCompatActivity
         {
             int id = Integer.parseInt(OSIS);
             LoginNote newNote = new LoginNote(id, title, desc);
-            LoginNote.noteArrayList.add(newNote);
             sqLiteManager.addNoteToDatabase(newNote);
         }
         else

@@ -23,7 +23,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class tradeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -80,15 +82,18 @@ public class tradeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 vh.Swap.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                         int o = note.getOSIS();
                         note.setOSIS(Integer.parseInt(OSIS));
                         note.setVisability("FALSE");
+                        note.setTimeStamp(sdf.format(new Date()));
 
                         for (MarketplaceNote i : helper.populateInventory(Integer.parseInt(OSIS.trim()))){
                             if (i.getID().equals(itemID)){
                                 System.out.println("SUCCESS");
                                 i.setOSIS(o);
                                 i.setVisability("FALSE");
+                                i.setTimeStamp(sdf.format(new Date()));
                                 helper.updateNoteInDB(i);
                             }
                         }
